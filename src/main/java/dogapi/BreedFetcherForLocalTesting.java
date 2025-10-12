@@ -16,7 +16,12 @@ public class BreedFetcherForLocalTesting implements BreedFetcher {
         if ("hound".equalsIgnoreCase(breed)) {
             return List.of("afghan", "basset");
         }
-        throw new BreedNotFoundException(breed);
+        throw sneakyThrow(new BreedNotFoundException(breed));
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <E extends Throwable> RuntimeException sneakyThrow(Throwable e) throws E {
+        throw (E) e;
     }
 
     public int getCallCount() {
